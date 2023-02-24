@@ -137,7 +137,7 @@ its [env params](https://vitejs.dev/config/#conditional-config), which then will
 
 ### merging strategy
 
-Merging done using [`_.merge`](https://lodash.com/docs/4.17.15#merge), with one difference: if both values are arrays,
+Merging done using immutable version of [`_.merge`](https://lodash.com/docs/4.17.15#merge), with one difference: if both values are arrays,
 they are simply concatenated, without recursively looking into their elements.
 
 Thus, you can't declaratively override one array with another.
