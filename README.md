@@ -133,6 +133,12 @@ or [async](https://vitejs.dev/config/#async-config) basic config.
 The only difference is that it always returns a function – so that Vite will feed it with
 its [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
 
+### `mergeConfigs`
+
+**`function mergeConfigs(a: Vite.UserConfig, b: Vite.UserConfig): Vite.UserConfig`**
+
+Function used internally to recursively merge chunks together. Exported just in case, if you want to do something custom.
+
 ## Hints
 
 ### merging strategy
@@ -144,5 +150,13 @@ Thus, you can't declaratively override one array with another.
 But, the purpose of this tool is __extension__, not __overriding__. If some of your chunks are trying to specify
 different value for the same option, you're probably doing something wrong.
 
-Nevertheless, if you absolutely need to __override__ an array value, you may use chunk callback definition and
-imperatively mutate parent config. See example in `defineChunk` section.
+However, if you absolutely need to __override__ an array value, you may use chunk callback definition and
+imperatively mutate parent config. See example in [`defineChunk`](#definechunk) section.
+
+### importing chunk modules
+When importing local modules into `vite.config`, you may face complaints from your editor:
+<img width="1128" alt="Screenshot 2023-02-24 at 22 45 17" src="https://user-images.githubusercontent.com/2756868/221294801-d8518856-3be6-4f83-ab57-5c2f6319b7b0.png">
+It doesn't affect build in any way, but is annoying to see.
+
+How to fix it is explained in warning itself: just `include` your files in `tsconfig.node.json`.
+
