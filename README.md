@@ -72,7 +72,7 @@ Chunks will be merged recursively over each other, starting with the basic confi
 
 **`type ExtendConfig<R> = (base: Vite.UserConfig, env: Vite.ConfigEnv) => R`**
 
-**`type Chunk = ExtendConfig<ViteConfig>`**
+**`type Chunk = ExtendConfig<Promise<Vite.UserConfig>>`**
 
 ### `defineChunk`
 

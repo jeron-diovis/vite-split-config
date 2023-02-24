@@ -19,7 +19,7 @@ type PromisedConfig = ReturnType<UserConfigFn>
 
 type ChunkFn<R> = (base: UserConfig, env: ConfigEnv) => R
 export type ChunkInitializer = ChunkFn<PromisedConfig | void | Promise<void>>
-export type ConfigChunk = ChunkFn<PromisedConfig>
+export type ConfigChunk = ChunkFn<Promise<UserConfig>>
 
 export type DefineChunk = (
   config: PromisedConfig | ChunkInitializer
@@ -33,7 +33,6 @@ export type UseChunks = (
 
 export const defineChunk: DefineChunk = cfg => async (base, env) => {
   const ext = await (isFunction(cfg) ? cfg(base, env) : cfg)
-  // `undefined` assumes that config has been mutated
   return ext === undefined ? base : mergeConfig(base, ext)
 }
 
