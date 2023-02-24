@@ -10,10 +10,12 @@
   "scripts": {
     "start": "vitest watch",
     "test": "vitest run",
-    "build": "tsc --noEmit false",
-    "lint": "eslint {src,tests}",
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "yarn lint:js && yarn lint:ts",
+    "lint:js": "eslint {src,tests}",
     "lint:ts": "tsc --noEmit",
-    "fix": "yarn lint --fix"
+    "fix": "yarn lint:js --fix",
+    "prepare": "husky install"
   },
   "keywords": [
     "vite",
@@ -34,9 +36,19 @@
     "@types/lodash-es": "^4.17.6",
     "@vitest/ui": "^0.28.5",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
     "kcd-scripts": "^13.0.0",
+    "lint-staged": "^13.1.2",
+    "tsc-files": "^1.1.3",
     "typescript": "^4.9.5",
     "vite": "^4.1.4",
     "vitest": "^0.28.5"
+  },
+  "lint-staged": {
+    "{src,tests}/**/*.ts": [
+      "eslint --cache --fix --max-warnings=0",
+      "tsc-files --noEmit"
+    ],
+    "src/**/*.ts": "vitest related --run"
   }
 }

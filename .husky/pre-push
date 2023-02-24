@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+yarn lint:js --max-warnings=0
+yarn lint:ts
+yarn test
