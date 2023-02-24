@@ -18,7 +18,7 @@ Left like that, config turns into [leviathan](https://github.com/facebook/create
 
 It's not hard at all to split config apart and merge that chunks. But anyway it's some extra complexity to care about – which nobody likes to bring.
 
-This solution tries to address it, taking away that extra logic from your sources.
+This solution tries to address it, taking away that low-level logic from your sources.
 
 ## Table of Contents
 - [Installation](#Installation)
