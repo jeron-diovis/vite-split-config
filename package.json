@@ -1,7 +1,7 @@
 {
   "name": "vite-split-config",
   "version": "0.0.1",
-  "description": "",
+  "description": "Split monolithic config file into dedicated chunks.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
