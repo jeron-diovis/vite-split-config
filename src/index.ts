@@ -1,17 +1,14 @@
 import { ConfigEnv, UserConfig, UserConfigExport, UserConfigFn } from 'vite'
 
-import { isFunction, merge, mergeWith, partialRight } from 'lodash-es'
+import { isFunction, mergeWith } from 'lodash/fp'
 
 // ---
 
-export const mergeConfig: typeof merge = partialRight(
-  mergeWith,
-  (a: unknown, b: unknown) => {
-    if (Array.isArray(a) && Array.isArray(b)) {
-      return a.concat(b)
-    }
+export const mergeConfig = mergeWith((a: unknown, b: unknown) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.concat(b)
   }
-)
+})
 
 // ---
 
