@@ -1,14 +1,20 @@
-# vite-split-config
-
+<div style="text-align: center; display: flex; align-items: center">
+<img src="logo.png" alt="logo" height="40px" style="margin-top: 15px"/>
+<h1 style="margin: 20px 0">
+vite-split-config
+</h1>
+</div>
 Split monolithic config file into dedicated chunks.
+
+---
 
 ## Table of Contents
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [API](#API)
-  - [defineChunk](#defineChunk) 
-  - [useChunks](#useChunks) 
-  - [mergeConfig](#mergeConfig)
+  - [defineChunk](#definechunk) 
+  - [useChunks](#usechunks) 
+  - [mergeConfig](#mergeconfig)
 - [Hints](#Hints)
 - [LICENSE](#LICENSE)
 
