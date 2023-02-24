@@ -2,8 +2,6 @@
 
 Split monolithic config file into dedicated chunks.
 
----
-
 ## Installation
 
 ```sh
@@ -71,13 +69,17 @@ Chunks will be merged recursively over each other, starting with the basic confi
 ## API
 
 **`type ViteConfig = Vite.UserConfig | Promise<Vite.UserConfig>`**
+
 **`type ExtendConfig<R> = (base: Vite.UserConfig, env: Vite.ConfigEnv) => R`**
+
 **`type Chunk = ExtendConfig<ViteConfig>`**
 
 ### `defineChunk`
 
 **`function defineChunk(config: ViteConfig): Chunk`**
+
 **`function defineChunk(config: ExtendConfig<ViteConfig>): Chunk`**
+
 **`function defineChunk(config: ExtendConfig<void | Promise<void>>): Chunk`**
 
 ```ts
