@@ -12,15 +12,13 @@ export const mergeConfig = mergeWith((a: unknown, b: unknown) => {
 
 // ---
 
-type PromisedConfig = ReturnType<UserConfigFn>
+type ViteConfig = ReturnType<UserConfigFn>
 
-type ChunkFn<R> = (base: UserConfig, env: ConfigEnv) => R
-export type ChunkInitializer = ChunkFn<PromisedConfig | void | Promise<void>>
-export type ConfigChunk = ChunkFn<Promise<UserConfig>>
+type ExtendConfig<R> = (base: UserConfig, env: ConfigEnv) => R
+export type ChunkFactory = ExtendConfig<ViteConfig | void | Promise<void>>
+export type ConfigChunk = ExtendConfig<Promise<UserConfig>>
 
-export type DefineChunk = (
-  config: PromisedConfig | ChunkInitializer
-) => ConfigChunk
+export type DefineChunk = (config: ViteConfig | ChunkFactory) => ConfigChunk
 
 export type UseChunks = (
   chunks: ConfigChunk[]
