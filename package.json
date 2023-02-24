@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --noEmit false",
+    "lint": "kcd-scripts lint",
+    "lint:ts": "tsc --noEmit",
+    "test": "kcd-scripts test"
   },
   "keywords": [
     "vite",
@@ -23,6 +30,9 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
+    "eslint-plugin-prettier": "^4.2.1",
+    "kcd-scripts": "^13.0.0",
+    "typescript": "^4.9.5",
     "vite": "^4.1.4"
   }
 }

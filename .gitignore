@@ -25,3 +25,6 @@ lib
 
 .stylelintcache
 .eslintcache
+
+package-lock.json
+yarn.lock
