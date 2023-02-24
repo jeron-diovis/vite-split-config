@@ -121,7 +121,7 @@ defineChunk(base => {
 
 ```ts
 // vite.config.ts
-const defineConfig = useChunks([ chunk1, chunk2, ... ])
+const defineConfig = useChunks([ chunk1, chunk2, /* ... */ ])
 export default defineConfig({ /* basic config */ })
 ```
 
@@ -131,7 +131,7 @@ replacement, with all the same features – defining [conditional](https://vitej
 or [async](https://vitejs.dev/config/#async-config) basic config.
 
 The only difference is that it always returns a function – so that Vite will feed it with
-it's [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
+its [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
 
 ## Hints
 
@@ -144,5 +144,5 @@ Thus, you can't declaratively override one array with another.
 But, the purpose of this tool is __extension__, not __overriding__. If some of your chunks are trying to specify
 different value for the same option, you're probably doing something wrong.
 
-Nevertheless, if you absolutely need to __override__ an array alue, you may use chunk callback definition and
+Nevertheless, if you absolutely need to __override__ an array value, you may use chunk callback definition and
 imperatively mutate parent config. See example in `defineChunk` section.
