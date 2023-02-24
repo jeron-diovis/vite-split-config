@@ -47,10 +47,19 @@ Define chunks dedicated to certain configuration aspects:
 ```ts
 // my-chunk.ts
 import { defineChunk } from 'vite-split-config'
+import checker from 'vite-plugin-checker'
 
 export const useLint = defineChunk({
   plugins: [
-    someLintingPlugin({/* various settings */ })
+    checker({
+      typescript: true,
+      eslint: { 
+        lintCommand: '...' 
+      },
+      stylelint: { 
+        lintCommand: '...' 
+      },
+    })
   ]
 })
 ```
@@ -58,15 +67,24 @@ export const useLint = defineChunk({
 ```ts
 // my-other-chunk.ts
 import { defineChunk } from 'vite-split-config'
+import criticalCSS from 'rollup-plugin-critical'
+import customSelectors from 'postcss-custom-selectors'
+
 export const useStyles = defineChunk({
   css: {
     devSourcemap: true,
     postcss: {
-      plugins: [/*...*/]
+      plugins: [
+        customSelectors({
+          /*...*/
+        }),
+      ]
     }
   },
   plugins: [
-    someStylesRelatedPlugin(),
+    criticalCSS({
+      /*...*/
+    }),
   ]
 })
 ```
