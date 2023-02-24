@@ -24,8 +24,8 @@
     "chunks",
     "modular"
   ],
-  "author": "Jeron Diovis <void.jeron.diovis@gmail.com>",
-  "license": "ISC",
+  "author": "Andrey Bobukh <a.bobukh@quantumobile.com>",
+  "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21"
   },
