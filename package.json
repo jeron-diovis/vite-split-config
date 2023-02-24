@@ -4,6 +4,7 @@
   "description": "Split monolithic config file into dedicated chunks.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "type": "module",
   "files": [
     "lib"
   ],
