@@ -1,0 +1,28 @@
+{
+  "name": "vite-split-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite",
+    "config",
+    "split",
+    "chunks",
+    "modular"
+  ],
+  "author": "void.jeron.diovis@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  },
+  "peerDependencies": {
+    "vite": ">=4.1.4"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "vite": "^4.1.4"
+  }
+}
