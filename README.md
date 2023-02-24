@@ -1,10 +1,10 @@
-<div style="text-align: center; display: flex; align-items: center">
-<img src="logo.png" alt="logo" height="40px" style="margin-top: 15px"/>
-<h1 style="margin: 20px 0">
+<div align="center">
+<img src="logo.png" alt="logo" height="200px" />
+<h1>
 vite-split-config
 </h1>
-</div>
 Split monolithic config file into dedicated chunks.
+</div>
 
 ---
 
