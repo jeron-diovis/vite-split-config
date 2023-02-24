@@ -8,11 +8,12 @@
     "lib"
   ],
   "scripts": {
+    "start": "vitest watch",
+    "test": "vitest run",
     "build": "tsc --noEmit false",
     "lint": "eslint {src,tests}",
     "lint:ts": "tsc --noEmit",
-    "fix": "yarn lint --fix",
-    "test": "vitest"
+    "fix": "yarn lint --fix"
   },
   "keywords": [
     "vite",

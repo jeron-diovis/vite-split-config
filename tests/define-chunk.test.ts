@@ -7,7 +7,7 @@ describe('defineChunk', () => {
   describe('chunk', () => {
     it('should be a function', () => {
       const chunk = defineChunk({})
-      expect(typeof chunk).toBe('function')
+      expect(chunk).toBeInstanceOf(Function)
       expect(chunk).toHaveLength(2)
     })
 
