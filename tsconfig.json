@@ -3,6 +3,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "types": ["vitest/globals"]
   }
 }
