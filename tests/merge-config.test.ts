@@ -1,4 +1,4 @@
-import { mergeConfig } from './index'
+import { mergeConfig } from '../src'
 
 describe('mergeConfig', () => {
   it('should recursively merge objects', () => {

@@ -9,9 +9,10 @@
   ],
   "scripts": {
     "build": "tsc --noEmit false",
-    "lint": "kcd-scripts lint",
+    "lint": "eslint {src,tests}",
     "lint:ts": "tsc --noEmit",
-    "test": "kcd-scripts test"
+    "fix": "yarn lint --fix",
+    "test": "vitest"
   },
   "keywords": [
     "vite",

@@ -2,5 +2,11 @@
   "extends": [
     "./node_modules/kcd-scripts/eslint.js",
     "plugin:prettier/recommended"
-  ]
+  ],
+  "rules": {
+    "one-var": ["error", "never"],
+    "prefer-const": "warn",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-invalid-void-type": "off"
+  }
 }

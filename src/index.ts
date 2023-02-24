@@ -17,16 +17,17 @@ export const mergeConfig: typeof merge = partialRight(
 
 type PromisedConfig = ReturnType<UserConfigFn>
 
-type If<Cond extends boolean, Value> = Cond extends true ? Value : never
+type ChunkFn<R> = (base: UserConfig, env: ConfigEnv) => R
+export type ChunkInitializer = ChunkFn<PromisedConfig | void | Promise<void>>
+export type ConfigChunk = ChunkFn<PromisedConfig>
 
-type Chunk<Mutable extends boolean = false> = (
-  base: UserConfig,
-  env: ConfigEnv
-) => PromisedConfig | If<Mutable, void | Promise<void>>
+export type DefineChunk = (
+  config: PromisedConfig | ChunkInitializer
+) => ConfigChunk
 
-type DefineChunk = (config: PromisedConfig | Chunk<true>) => Chunk
-
-type UseChunks = (chunks: Chunk[]) => (config: UserConfigExport) => UserConfigFn
+export type UseChunks = (
+  chunks: ConfigChunk[]
+) => (config: UserConfigExport) => UserConfigFn
 
 // ---
 
@@ -44,7 +45,7 @@ type UseChunks = (chunks: Chunk[]) => (config: UserConfigExport) => UserConfigFn
  * </pre>
  */
 export const defineChunk: DefineChunk = cfg => async (base, env) => {
-  const ext = isFunction(cfg) ? await cfg(base, env) : cfg
+  const ext = await (isFunction(cfg) ? cfg(base, env) : cfg)
   // `undefined` assumes that config has been mutated
   return ext === undefined ? base : mergeConfig(base, ext)
 }
