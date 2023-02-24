@@ -8,6 +8,18 @@ Split monolithic config file into dedicated chunks.
 
 ---
 
+## Motivation
+
+Config files tend to grow. 
+
+Eventually there appears more and more specialized settings, more plugin imports and options for them, more local helpers and variables used once somewhere 300 lines below, more comments, and so on. 
+
+Left like that, config turns into [leviathan](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js), taking forever to figure it out and update something. Especially when the issue you want to address requires updating [several different config sections](https://stackoverflow.com/a/72440811/3437433).
+
+It's not hard at all to split config apart and merge that chunks. But anyway it's some extra complexity to care about – which nobody likes to bring.
+
+This solution tries to address it, taking away that extra logic from your sources.
+
 ## Table of Contents
 - [Installation](#Installation)
 - [Usage](#Usage)
