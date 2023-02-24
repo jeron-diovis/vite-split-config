@@ -2,6 +2,16 @@
 
 Split monolithic config file into dedicated chunks.
 
+## Table of Contents
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [API](#API)
+  - [defineChunk](#defineChunk) 
+  - [useChunks](#useChunks) 
+  - [mergeConfig](#mergeConfig)
+- [Hints](#Hints)
+- [LICENSE](#LICENSE)
+
 ## Installation
 
 ```sh
@@ -160,3 +170,6 @@ It doesn't affect build in any way, but is annoying to see.
 
 How to fix it is explained in warning itself: just `include` your files in `tsconfig.node.json`.
 
+## LICENSE
+
+MIT
