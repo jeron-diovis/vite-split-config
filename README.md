@@ -109,8 +109,7 @@ export default defineConfig({
 })
 ```
 
-Chunks will be merged recursively over each other, starting with the basic config, in order you specified in `useChunks`
-.
+Chunks will be merged recursively, in order you specified in `useChunks`, starting with the basic config.
 
 ## API
 
@@ -183,7 +182,7 @@ its [env params](https://vitejs.dev/config/#conditional-config), which then will
 
 **`function merge(a: object, b: object): object`**
 
-Function used internally to recursively merge chunks together. Exported just in case, if you want to do something custom.
+Helper used internally for recursive chunks merging. Exported just in case, if you want to do something custom.
 
 ## Hints
 
