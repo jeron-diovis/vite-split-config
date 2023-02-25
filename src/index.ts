@@ -16,11 +16,9 @@ export type UseChunks = (
 
 // ---
 
-export const merge = mergeWith((a: unknown, b: unknown) => {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return a.concat(b)
-  }
-})
+export const merge = mergeWith((a: unknown, b: unknown) =>
+  Array.isArray(a) && Array.isArray(b) ? a.concat(b) : undefined
+)
 
 export const defineChunk: DefineChunk = cfg => async (base, env) => {
   const ext = await (isFunction(cfg) ? cfg(base, env) : cfg)
