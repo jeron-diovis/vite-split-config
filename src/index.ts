@@ -2,16 +2,6 @@ import { ConfigEnv, UserConfig, UserConfigExport, UserConfigFn } from 'vite'
 
 import { isFunction, mergeWith } from 'lodash/fp'
 
-// ---
-
-export const mergeConfig = mergeWith((a: unknown, b: unknown) => {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return a.concat(b)
-  }
-})
-
-// ---
-
 type ViteConfig = ReturnType<UserConfigFn>
 
 type ExtendConfig<R> = (base: UserConfig, env: ConfigEnv) => R
@@ -26,9 +16,15 @@ export type UseChunks = (
 
 // ---
 
+export const merge = mergeWith((a: unknown, b: unknown) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.concat(b)
+  }
+})
+
 export const defineChunk: DefineChunk = cfg => async (base, env) => {
   const ext = await (isFunction(cfg) ? cfg(base, env) : cfg)
-  return ext === undefined ? base : mergeConfig(base, ext)
+  return ext === undefined ? base : merge(base, ext)
 }
 
 export const useChunks: UseChunks = fns => init => env =>

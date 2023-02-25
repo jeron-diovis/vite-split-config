@@ -179,9 +179,9 @@ or [async](https://vitejs.dev/config/#async-config) basic config.
 The only difference is that it always returns a function – so that Vite will feed it with
 its [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
 
-### `mergeConfig`
+### `merge`
 
-**`function mergeConfig(a: Vite.UserConfig, b: Vite.UserConfig): Vite.UserConfig`**
+**`function merge(a: object, b: object): object`**
 
 Function used internally to recursively merge chunks together. Exported just in case, if you want to do something custom.
 
