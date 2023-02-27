@@ -28,4 +28,20 @@ describe('merge', () => {
     expect(merged.a).toHaveProperty('b', 3)
     expect(merged.a).toHaveProperty('c', 4)
   })
+
+  it('should not deep copy right array elements, if left value is undefined', () => {
+    const left = { a: undefined }
+
+    const getter = vi.fn(() => 42)
+    // eslint-disable-next-line
+    const nestedObj = { get foo() { return getter() }}
+    const right = { a: [nestedObj] }
+
+    const merged = merge(left, right) as typeof right
+
+    // must be _referentially_ equal, not structurally!
+    expect(merged.a[0]).toBe(nestedObj)
+
+    expect(getter).not.toBeCalled()
+  })
 })

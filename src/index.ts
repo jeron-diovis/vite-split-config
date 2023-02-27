@@ -16,8 +16,19 @@ export type UseChunks = (
 
 // ---
 
-export const merge = mergeWith((a: unknown, b: unknown) =>
-  Array.isArray(a) && Array.isArray(b) ? a.concat(b) : undefined
+export const merge = mergeWith(
+  (left: unknown, right: unknown) =>
+    Array.isArray(right)
+      ? Array.isArray(left)
+        ? left.concat(right)
+        : /**
+           * It is important to explicitly "just return" right value in this case.
+           * Otherwise lodash will deeply traverse it – and seemingly deep copy it – even if left value is undefined.
+           * Which will fail equality checks like this one:
+           * @see https://github.com/vitejs/vite-plugin-react/blob/6756b854ce0e87cf5407139a4120994c3cd5df2c/packages/plugin-react/src/index.ts#L182
+           */
+          right
+      : undefined // fallback to internal logic of _.merge
 )
 
 export const defineChunk: DefineChunk = cfg => async (base, env) => {
