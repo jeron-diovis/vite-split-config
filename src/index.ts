@@ -1,6 +1,11 @@
 import { ConfigEnv, UserConfig, UserConfigExport, UserConfigFn } from 'vite'
 
-import { isFunction, mergeWith } from 'lodash/fp'
+import {
+  isFunction,
+  mergeWith,
+  partialRight,
+  merge as base_merge,
+} from 'lodash-es'
 
 type ViteConfig = ReturnType<UserConfigFn>
 
@@ -16,7 +21,8 @@ export type UseChunks = (
 
 // ---
 
-export const merge = mergeWith(
+export const merge: typeof base_merge = partialRight(
+  mergeWith,
   (left: unknown, right: unknown) =>
     Array.isArray(right)
       ? Array.isArray(left)
