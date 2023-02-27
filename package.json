@@ -16,7 +16,8 @@
     "lint:js": "eslint {src,tests}",
     "lint:ts": "tsc --noEmit",
     "fix": "yarn lint:js --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublish": "yarn test && yarn build"
   },
   "keywords": [
     "vite",
