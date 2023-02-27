@@ -2,6 +2,7 @@
   "extends": "./node_modules/kcd-scripts/shared-tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
+    "target": "ESNext",
     "types": ["vitest", "vitest/globals"]
   },
   "include": ["src", "tests"]

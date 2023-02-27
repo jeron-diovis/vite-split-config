@@ -2,7 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "target": "ESNext",
     "outDir": "lib",
     "declaration": true,
     "removeComments": true
