@@ -8,6 +8,10 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeron-diovis/vite-split-config.git"
+  },
   "scripts": {
     "start": "vitest watch",
     "test": "vitest run",
