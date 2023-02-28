@@ -32,11 +32,11 @@ describe('defineChunk', () => {
       })
     })
 
-    it('should mutate base config', async () => {
+    it('should not mutate base config', async () => {
       const chunk = defineChunk({ mode: 'chunk' })
       const baseConfig: UserConfig = { mode: 'base' }
       await chunk(baseConfig, VITE_ENV)
-      expect(baseConfig).toStrictEqual({ mode: 'chunk' })
+      expect(baseConfig).toStrictEqual({ mode: 'base' })
     })
   })
 
@@ -82,8 +82,10 @@ describe('defineChunk', () => {
       const chunk = defineChunk(base => {
         base.mode = 'mutable'
       })
-      const newConfig = await chunk({}, VITE_ENV)
+      const base: UserConfig = {}
+      const newConfig = await chunk(base, VITE_ENV)
       expect(newConfig).toStrictEqual({ mode: 'mutable' })
+      expect(base).toStrictEqual({ mode: 'mutable' })
     })
   })
 })

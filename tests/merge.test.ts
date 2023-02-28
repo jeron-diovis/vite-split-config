@@ -1,4 +1,4 @@
-import { merge } from '../src'
+import { mergeConfig as merge } from '../src'
 
 describe('merge', () => {
   it('should recursively merge objects', () => {
@@ -15,18 +15,14 @@ describe('merge', () => {
     })
   })
 
-  it('should just assign if only one value is array', () => {
+  it('should squash everything into array if one value is an array', () => {
     let merged
 
-    merged = merge({ a: 2 }, { a: [1, 2] })
-    expect(merged).toStrictEqual({ a: [1, 2] })
+    merged = merge({ a: 0 }, { a: [1, 2] })
+    expect(merged).toStrictEqual({ a: [0, 1, 2] })
 
     merged = merge({ a: [1, 2] }, { a: { b: 3, c: 4 } })
-    expect(merged.a).toBeInstanceOf(Array)
-    expect(merged.a).toHaveProperty('0', 1)
-    expect(merged.a).toHaveProperty('1', 2)
-    expect(merged.a).toHaveProperty('b', 3)
-    expect(merged.a).toHaveProperty('c', 4)
+    expect(merged).toStrictEqual({ a: [1, 2, { b: 3, c: 4 }] })
   })
 
   it('should not deep copy neither left nor right array elements', () => {
@@ -42,16 +38,11 @@ describe('merge', () => {
   it('should not deep copy right array elements when left value is undefined', () => {
     const left = { a: undefined }
 
-    const getter = vi.fn(() => 42)
-    // eslint-disable-next-line
-    const obj = { get foo() { return getter() }}
+    const obj = { b: 1 }
     const right = { a: [obj] }
 
-    const merged = merge(left, right) as typeof right
-
+    const merged = merge(left, right)
     // must be _referentially_ equal, not structurally!
     expect(merged.a[0]).toBe(obj)
-
-    expect(getter).not.toBeCalled()
   })
 })

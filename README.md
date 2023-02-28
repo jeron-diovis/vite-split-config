@@ -178,24 +178,26 @@ or [async](https://vitejs.dev/config/#async-config) basic config.
 The only difference is that it always returns a function – so that Vite will feed it with
 its [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
 
-### `merge`
+### `mergeConfig`
 
-**`function merge(a: object, b: object): object`**
-
-Helper used internally for recursive chunks merging. Exported just in case, if you want to do something custom.
+Re-export of Vite's [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) helper.
 
 ## Hints
 
 ### merging strategy
 
-Merging done using [`_.merge`](https://lodash.com/docs/4.17.15#merge), with one difference: if both values are arrays,
-they are simply concatenated, without recursively looking into their elements.
+Configs are merged with Vite's [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) helper.
 
-Thus, you can't declaratively override one array with another.
+It has one specific feature: if one of merged values is an array, then other value is added to that array. Like this:
+```
+mergeConfig({ a: [1] }, { a: 2 }) // => { a: [1, 2] }
+```
+
+Thus, you can't declaratively override a value in this case.
 But, the purpose of this tool is __extension__, not __overriding__. If some of your chunks are trying to specify
 different value for the same option, you're probably doing something wrong.
 
-However, if you absolutely need to __override__ an array value, you may use chunk callback definition and
+However, if you absolutely need to do __override__, you may use chunk callback definition and
 imperatively mutate parent config. See example in [`defineChunk`](#definechunk) section.
 
 ### importing chunk modules
