@@ -8,11 +8,6 @@ Split monolithic config file into dedicated chunks.
 
 ---
 
-[![Code Coverage][coverage-badge]][coverage]
-[![version][version-badge]][package]
-[![downloads][downloads-badge]][npmtrends]
-[![MIT License][license-badge]][license]
-
 ## Motivation
 
 Config files tend to grow. 
