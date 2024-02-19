@@ -4,11 +4,18 @@ import {
   UserConfig,
   UserConfigExport,
   UserConfigFn,
+  loadEnv,
 } from 'vite'
 
 type ViteConfig = ReturnType<UserConfigFn>
 
-type ExtendConfig<R> = (base: UserConfig, env: ConfigEnv) => R
+type ExtendConfig<R> = (
+  base: UserConfig,
+  cfg: {
+    env: NodeJS.ProcessEnv
+    vite: ConfigEnv
+  }
+) => R
 export type ChunkFactory = ExtendConfig<ViteConfig | void | Promise<void>>
 export type ConfigChunk = ExtendConfig<Promise<UserConfig>>
 
@@ -29,8 +36,10 @@ export const defineChunk: DefineChunk = cfg => async (base, env) => {
   return ext === undefined ? base : mergeConfig(base, ext)
 }
 
-export const useChunks: UseChunks = fns => init => env =>
-  fns.reduce(
-    async (cfg, chunk) => chunk(await cfg, env),
-    isFunction(init) ? init(env) : init
+export const useChunks: UseChunks = fns => init => cfgEnv => {
+  const env = loadEnv('all', process.cwd(), '')
+  return fns.reduce(
+    async (cfg, chunk) => chunk(await cfg, { env, vite: cfgEnv }),
+    isFunction(init) ? init(cfgEnv) : init
   )
+}

@@ -115,7 +115,7 @@ Chunks will be merged recursively, in order you specified in `useChunks`, starti
 
 **`type ViteConfig = Vite.UserConfig | Promise<Vite.UserConfig>`**
 
-**`type ExtendConfig<R> = (base: Vite.UserConfig, env: Vite.ConfigEnv) => R`**
+**`type ExtendConfig<R> = (base: Vite.UserConfig, cfg: { env: NodeJS.ProcessEnv, vite: Vite.ConfigEnv }) => R`**
 
 **`type Chunk = ExtendConfig<Promise<Vite.UserConfig>>`**
 
@@ -148,9 +148,10 @@ defineChunk(base => ({
     define: { __APP_TYPE__: JSON.stringify(base.appType) }
 }))
 
-// depending on Vite env:
-defineChunk((base, env) => ({
-    logLevel: env.mode === 'test' ? 'silent' : 'info'
+// depending on Vite env or process.env:
+defineChunk((base, { env, vite }) => ({
+    logLevel: vite.mode === 'test' ? 'silent' : 'info',
+    appType: env.APP_TYPE,
 }))
 
 // imperative update:

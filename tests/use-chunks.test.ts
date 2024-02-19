@@ -33,16 +33,18 @@ describe('useChunks', () => {
     expect(config).toStrictEqual({})
   })
 
-  it('should pass base config and env to chunks', async () => {
-    const chunk = defineChunk((base, env) => ({
-      base: `${base.envPrefix}-${env.mode}-${env.command}`,
+  it('should pass base config, process.env and env to chunks', async () => {
+    const chunk = defineChunk((base, { env, vite }) => ({
+      base: `${base.envPrefix}-${env.FOO}-${vite.mode}-${vite.command}`,
     }))
     const defineConfig = useChunks([chunk])
     const configFn = defineConfig({ envPrefix: 'prefix' })
+    process.env.FOO = 'foo'
     const config = await configFn({ command: 'serve', mode: 'test' })
+    delete process.env.FOO
     expect(config).toStrictEqual({
       envPrefix: 'prefix',
-      base: 'prefix-test-serve',
+      base: 'prefix-foo-test-serve',
     })
   })
 
