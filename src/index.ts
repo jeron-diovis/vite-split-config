@@ -45,12 +45,12 @@ export const defineChunk: DefineChunk = cfg => async (base, env) => {
 
 const createConfigResolver =
   (chunks: ConfigChunkFn[]): ConfigResolver =>
-  init =>
-  cfgEnv => {
+  base =>
+  viteEnv => {
     const env = loadEnv('all', process.cwd(), '')
     return chunks.reduce(
-      async (cfg, chunk) => chunk(await cfg, { env, vite: cfgEnv }),
-      isFunction(init) ? init(cfgEnv) : init
+      async (cfg, chunk) => chunk(await cfg, { env, vite: viteEnv }),
+      isFunction(base) ? base(viteEnv) : base
     )
   }
 
