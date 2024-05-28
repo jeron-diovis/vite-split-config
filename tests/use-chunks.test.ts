@@ -48,6 +48,17 @@ describe('useChunks', () => {
     })
   })
 
+  it('should have ".extend" method to add additional chunks to config', async () => {
+    const defineConfig = useChunks([defineChunk({ base: 'base' })])
+    expect(defineConfig.extend).toBeInstanceOf(Function)
+    const defineConfig2 = defineConfig
+      .extend([defineChunk({ appType: 'spa' })])
+      .extend([defineChunk({ mode: 'test' })])
+    const configFn = defineConfig2({})
+    const config = await configFn(VITE_ENV)
+    expect(config).toStrictEqual({ base: 'base', appType: 'spa', mode: 'test' })
+  })
+
   describe('define base config', () => {
     it('should accept promise', async () => {
       const defineConfig = useChunks([])

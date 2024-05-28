@@ -21,9 +21,13 @@ export type ConfigChunk = ExtendConfig<Promise<UserConfig>>
 
 export type DefineChunk = (config: ViteConfig | ChunkFactory) => ConfigChunk
 
-export type UseChunks = (
-  chunks: ConfigChunk[]
-) => (config: UserConfigExport) => UserConfigFn
+type ConfigResolver = (config: UserConfigExport) => UserConfigFn
+
+interface UseChunksExtendable extends ConfigResolver {
+  extend: (chunks: ConfigChunk[]) => UseChunksExtendable
+}
+
+export type UseChunks = (chunks: ConfigChunk[]) => UseChunksExtendable
 
 // ---
 
@@ -36,10 +40,20 @@ export const defineChunk: DefineChunk = cfg => async (base, env) => {
   return ext === undefined ? base : mergeConfig(base, ext)
 }
 
-export const useChunks: UseChunks = fns => init => cfgEnv => {
-  const env = loadEnv('all', process.cwd(), '')
-  return fns.reduce(
-    async (cfg, chunk) => chunk(await cfg, { env, vite: cfgEnv }),
-    isFunction(init) ? init(cfgEnv) : init
-  )
-}
+// ---
+
+const createConfigResolver =
+  (chunks: ConfigChunk[]): ConfigResolver =>
+  init =>
+  cfgEnv => {
+    const env = loadEnv('all', process.cwd(), '')
+    return chunks.reduce(
+      async (cfg, chunk) => chunk(await cfg, { env, vite: cfgEnv }),
+      isFunction(init) ? init(cfgEnv) : init
+    )
+  }
+
+export const useChunks: UseChunks = chunks =>
+  Object.assign(createConfigResolver(chunks), {
+    extend: (extra: ConfigChunk[]) => useChunks([...chunks, ...extra]),
+  })
