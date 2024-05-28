@@ -26,6 +26,21 @@ describe('useChunks', () => {
     })
   })
 
+  it('should accept plain objects and promises along with "defineChunk" funcs', async () => {
+    const defineConfig = useChunks([
+      { mode: 'mode' },
+      Promise.resolve({ appType: 'spa' }),
+    ])
+    const configFn = defineConfig({ base: 'base' })
+    const config = configFn(VITE_ENV)
+
+    expect(await config).toStrictEqual({
+      base: 'base',
+      mode: 'mode',
+      appType: 'spa',
+    })
+  })
+
   it('should return a sync value if no chunks specified', () => {
     const defineConfig = useChunks([])
     const configFn = defineConfig({})
@@ -53,7 +68,7 @@ describe('useChunks', () => {
     expect(defineConfig.extend).toBeInstanceOf(Function)
     const defineConfig2 = defineConfig
       .extend([defineChunk({ appType: 'spa' })])
-      .extend([defineChunk({ mode: 'test' })])
+      .extend([{ mode: 'test' }])
     const configFn = defineConfig2({})
     const config = await configFn(VITE_ENV)
     expect(config).toStrictEqual({ base: 'base', appType: 'spa', mode: 'test' })

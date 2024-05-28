@@ -17,9 +17,10 @@ type ExtendConfig<R> = (
   }
 ) => R
 export type ChunkFactory = ExtendConfig<ViteConfig | void | Promise<void>>
-export type ConfigChunk = ExtendConfig<Promise<UserConfig>>
+export type ConfigChunkFn = ExtendConfig<Promise<UserConfig>>
+export type ConfigChunk = ConfigChunkFn | ViteConfig
 
-export type DefineChunk = (config: ViteConfig | ChunkFactory) => ConfigChunk
+export type DefineChunk = (config: ViteConfig | ChunkFactory) => ConfigChunkFn
 
 type ConfigResolver = (config: UserConfigExport) => UserConfigFn
 
@@ -43,7 +44,7 @@ export const defineChunk: DefineChunk = cfg => async (base, env) => {
 // ---
 
 const createConfigResolver =
-  (chunks: ConfigChunk[]): ConfigResolver =>
+  (chunks: ConfigChunkFn[]): ConfigResolver =>
   init =>
   cfgEnv => {
     const env = loadEnv('all', process.cwd(), '')
@@ -53,7 +54,10 @@ const createConfigResolver =
     )
   }
 
+const normalizeChunk = (chunk: ConfigChunk): ConfigChunkFn =>
+  isFunction(chunk) ? chunk : defineChunk(chunk)
+
 export const useChunks: UseChunks = chunks =>
-  Object.assign(createConfigResolver(chunks), {
+  Object.assign(createConfigResolver(chunks.map(normalizeChunk)), {
     extend: (extra: ConfigChunk[]) => useChunks([...chunks, ...extra]),
   })
