@@ -179,6 +179,17 @@ or [async](https://vitejs.dev/config/#async-config) basic config.
 The only difference is that it always returns a function – so that Vite will feed it with
 its [env params](https://vitejs.dev/config/#conditional-config), which then will be passed to every chunk.
 
+#### `useChunks.extend`
+
+```ts
+const defineConfig = useChunks([chunk1, chunk2])
+// somewhere else
+const defineNewConfig = defineConfig.extend([ yetAnotherChunk, /* ... */ ])
+defineNewConfig({ /* basic config */})
+```
+
+For complex distributed configs, `extend` method allows to append more chunks to already existing chain.
+
 ### `mergeConfig`
 
 Re-export of Vite's [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) helper.
