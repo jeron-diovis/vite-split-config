@@ -70,7 +70,7 @@ describe('defineChunk', () => {
         mode: base.appType,
         envPrefix: `${vite.command}-${vite.mode}-${env.FOO}`,
       }))
-      process.env
+
       const newConfig = await chunk(
         { appType: 'spa' },
         {
