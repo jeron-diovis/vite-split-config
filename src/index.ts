@@ -24,7 +24,7 @@ export type DefineChunk = (config: ViteConfig | ChunkFactory) => ConfigChunkFn
 
 type ConfigResolver = (config: UserConfigExport) => UserConfigFn
 
-interface UseChunksExtendable extends ConfigResolver {
+export interface UseChunksExtendable extends ConfigResolver {
   extend: (chunks: ConfigChunk[]) => UseChunksExtendable
 }
 
